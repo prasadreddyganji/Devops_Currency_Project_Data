@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: false
+
+  tasks:
+
+  - name: create docker image using war file
+    command: docker build -t simple-devops-image:latest .
+    args:
+      chdir: /home/reddy/xyz
+
+  - name: remove docker service
+    command: docker service rm simple-devops-container
+    ignore_errors: yes
+
+  - name: create service
+    command: docker service create --name simple-devops-container --replicas 3 -p 11022:8080 simple-devops-image:latest
+

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    image: simple-devops-image:latest
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1000M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "11022:8080"
+    networks:
+      - webnet
+networks:
+  webnet:
